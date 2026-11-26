@@ -1,0 +1,595 @@
+![](UTA-DataScience-Logo.png)
+
+# Project Title
+
+* **One Sentence Summary** This repository presents a machine learning approach for predicting whether an individual is an introvert or extrovert using behavioral and social activity data from the Kaggle competition Predict the Introverts from the Extroverts (https://www.kaggle.com/competitions/playground-series-s5e7). 
+
+## Overview
+
+The task, as defined by the Kaggle competition, is to predict whether a person is an introvert or an extrovert using behavioral and social activity features such as time spent alone, social event attendance, stage fear, social exhaustion, friend circle size, and social media activity. Our approach formulates the problem as a binary classification task and uses an XGBoost classifier to learn patterns from these behavioral indicators. The dataset was preprocessed through missing value imputation and categorical feature encoding, followed by hyperparameter tuning using GridSearchCV to improve model performance. The best model achieved approximately 96.9% validation accuracy, demonstrating strong predictive capability for distinguishing between introverted and extroverted personalities. This performance indicates that behavioral features are highly informative for personality classification and that XGBoost is an effective model for this task.
+
+## Summary of Workdone
+
+Include only the sections that are relevant an appropriate.
+
+### Data
+* Data:
+  * Type:
+    * Input: CSV file containing behavioral and social activity features.
+    * Output: Personality label (Introvert or Extrovert).
+    * Features include:
+      * Time_spent_Alone
+      * Stage_fear
+      * Social_event_attendance
+      * Going_outside
+      * Drained_after_socializing
+      * Friends_circle_size
+      * Post_frequency
+  * Size:
+    * Training dataset: 18,524 records
+    * Test dataset: 6,175 records
+    * Total data provided: 24,699 records
+  * Instances (Train, Test, Validation Split):
+    * Training data: 18,524 instances
+    * Validation data: 3,705 instances (20% of the training set after splitting)
+    * Model training data: 14,819 instances (80% of the training set after splitting)
+    * Competition test data: 6,175 instances
+    
+
+#### Preprocessing / Clean up
+
+The dataset was examined for missing values and data quality issues before model training. Numerical features with missing values were imputed using the median of each column, while categorical features were filled using the most frequent category (mode). Categorical variables such as `Stage_fear` and `Drained_after_socializing` were encoded into numerical values to make them suitable for machine learning algorithms. The target variable, `Personality`, was also encoded into binary labels representing Introvert and Extrovert classes. After preprocessing, the data was split into training and validation sets using a stratified 80/20 split to preserve the original class distribution. The same preprocessing steps were applied to both the training and competition test datasets to ensure consistency during prediction.
+
+#### Data Visualization
+
+Several visualizations were created to better understand the relationship between behavioral features and personality type.
+
+**1. Personality Distribution (Count Plot)**
+
+A count plot of the target variable showed that the dataset is relatively balanced between Introverts and Extroverts. This balanced distribution helps prevent the model from becoming biased toward one class and improves the reliability of evaluation metrics.
+
+**2. Feature Distribution Histograms**
+
+Histograms were generated for numerical features such as `Time_spent_Alone`, `Social_event_attendance`, and `Friends_circle_size`. The visualizations showed noticeable differences between personality groups. Introverts generally spent more time alone, while extroverts tended to participate in more social events and maintain larger friend circles.
+
+**3. Correlation Heatmap**
+
+A correlation heatmap was used to examine relationships among the numerical features. Most features showed weak to moderate correlations, indicating that each feature contributes unique information to the prediction task and minimizes concerns about multicollinearity.
+
+**4. Personality Comparison Plots**
+
+Boxplots and grouped visualizations were created to compare behavioral characteristics across personality types. The plots revealed that individuals classified as extroverts generally attended more social events and spent less time alone. Introverts were more likely to report stage fear and feeling drained after socializing.
+
+**Observations**
+
+The visualizations suggest that social behavior variables are strong predictors of personality type. Features such as `Drained_after_socializing`, `Time_spent_Alone`, and `Stage_fear` showed the clearest separation between introverts and extroverts, which is consistent with the feature importance rankings generated by the XGBoost model.
+
+### Problem Formulation
+
+**Input:** The model uses seven behavioral and social activity features as input:
+
+- Time_spent_Alone
+- Stage_fear
+- Social_event_attendance
+- Going_outside
+- Drained_after_socializing
+- Friends_circle_size
+- Post_frequency
+
+**Output:** The target variable is **Personality**, a binary classification problem with two possible classes:
+
+- Introvert
+- Extrovert
+
+The objective is to predict a person's personality type based on their behavioral characteristics.
+
+---
+
+#### Models
+
+Several modeling approaches were considered for this classification task. Tree-based ensemble methods were chosen because they can effectively handle nonlinear relationships and interactions among features.
+
+**XGBoost Classifier**
+
+The primary model used in this project was XGBoost (Extreme Gradient Boosting). XGBoost was selected because:
+
+- It performs well on structured tabular data.
+- It can model complex relationships between features.
+- It is robust to noise and missing values.
+- It often achieves state-of-the-art performance in Kaggle competitions.
+
+Two versions of the model were evaluated:
+
+1. **Baseline XGBoost Model**
+   - Trained using default hyperparameters.
+   - Served as an initial benchmark.
+
+2. **Tuned XGBoost Model**
+   - Hyperparameters were optimized using GridSearchCV.
+   - Produced the highest validation accuracy and was selected as the final model.
+
+---
+
+#### Loss, Optimizer, and Hyperparameters
+
+**Loss Function**
+
+The XGBoost classifier uses the binary logistic loss function for binary classification tasks, which measures the difference between predicted probabilities and actual class labels.
+
+**Optimizer**
+
+XGBoost uses gradient boosting optimization, where decision trees are added sequentially to minimize the classification error.
+
+**Hyperparameters Tuned**
+
+The following hyperparameters were optimized using GridSearchCV:
+
+- `n_estimators` (number of trees)
+- `max_depth` (maximum tree depth)
+- `learning_rate` (boosting learning rate)
+- `subsample` (fraction of training examples used per tree)
+- `colsample_bytree` (fraction of features used per tree)
+
+The best-performing hyperparameter combination was selected based on validation accuracy.
+
+**Evaluation Metrics**
+
+Model performance was evaluated using:
+
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+- Confusion Matrix
+
+The final tuned XGBoost model achieved approximately **96.9% validation accuracy**, demonstrating strong performance on the personality classification task.
+
+### Training
+
+#### How the Model Was Trained
+
+The model was developed and trained using **Python in Jupyter Notebook**. The following libraries were used throughout the project:
+
+- Pandas and NumPy for data preprocessing and analysis
+- Matplotlib and Seaborn for data visualization
+- Scikit-learn for preprocessing, model evaluation, and hyperparameter tuning
+- XGBoost for model training and prediction
+
+The experiments were conducted locally through Jupyter Notebook, which allowed interactive data exploration, visualization, model development, and evaluation.
+
+---
+
+#### Training Time
+
+The XGBoost model trained quickly because the dataset size was relatively small. Model training typically completed within a few seconds, while hyperparameter tuning with GridSearchCV required additional time due to testing multiple parameter combinations.
+
+---
+
+#### Training Curves
+
+Since XGBoost is a tree-based machine learning algorithm rather than a neural network, training does not occur in epochs. Therefore, traditional loss-versus-epoch training curves were not generated. Model performance was monitored using validation metrics such as accuracy, precision, recall, and F1-score.
+
+---
+
+#### Stopping Criteria
+
+Training automatically stopped after the specified number of trees (`n_estimators`) had been built. During hyperparameter tuning, GridSearchCV selected the model configuration that produced the highest validation accuracy.
+
+---
+
+#### Difficulties and Solutions
+
+One challenge was handling missing values in both numerical and categorical features. This issue was resolved using median imputation for numerical variables and mode imputation for categorical variables.
+
+Another challenge was selecting the best model configuration. Hyperparameter tuning using GridSearchCV helped identify the optimal XGBoost settings and improved overall performance.
+
+Finally, consistent preprocessing was required for both training and test datasets. Applying the same encoding and imputation procedures to both datasets ensured reliable predictions and successful Kaggle submissions.
+
+The final tuned XGBoost model achieved approximately **96.9% validation accuracy**, demonstrating strong performance in predicting personality types.
+
+### Performance Comparison
+
+#### Evaluation Metrics
+
+The primary performance metric for this project was **Accuracy**, which measures the percentage of correctly classified personality types. Additional metrics including **Precision**, **Recall**, and **F1-Score** were used to provide a more complete evaluation of model performance.
+
+Definitions:
+
+- **Accuracy**: Percentage of correct predictions.
+- **Precision**: Percentage of positive predictions that are correct.
+- **Recall**: Percentage of actual positive instances correctly identified.
+- **F1-Score**: Harmonic mean of precision and recall.
+
+---
+
+#### Model Performance Comparison
+
+| Model | Accuracy |
+|---------|---------:|
+| Baseline XGBoost | 96.5% |
+| Tuned XGBoost (GridSearchCV) | 96.9% |
+
+The tuned XGBoost model achieved the highest validation accuracy and was selected as the final model. Hyperparameter tuning provided a small improvement over the baseline model while maintaining strong generalization performance.
+
+---
+
+#### Visualization of Results
+
+**1. Confusion Matrix**
+
+The confusion matrix shows the number of correctly and incorrectly classified personality types. Most observations were classified correctly, which is consistent with the high validation accuracy achieved by the model.
+
+*(Insert your confusion matrix figure here)*
+
+<p align="center">
+<img src="images/confusion_matrix.png" width="500">
+</p>
+
+**2. Feature Importance Plot**
+
+The feature importance visualization identifies which behavioral features contributed most to personality prediction.
+
+The most important features were:
+
+1. Drained_after_socializing
+2. Time_spent_Alone
+3. Stage_fear
+
+These variables had the largest impact on the model's predictions, indicating that social fatigue and personal social preferences are strong indicators of personality type.
+
+*(Insert your feature importance plot here)*
+
+<p align="center">
+<img src="images/feature_importance.png" width="600">
+</p>
+
+---
+
+#### Discussion
+
+The XGBoost classifier achieved approximately **96.9% validation accuracy**, demonstrating excellent performance on the personality classification task. The confusion matrix showed very few misclassifications, and the feature importance analysis confirmed that the most influential variables align with expected behavioral differences between introverts and extroverts.
+
+### Conclusions
+
+This project successfully developed a machine learning model for predicting whether an individual is an introvert or extrovert based on behavioral and social activity data. The results demonstrated that behavioral characteristics contain strong predictive information for personality classification.
+
+The tuned XGBoost model achieved approximately **96.9% validation accuracy**, indicating excellent performance on the classification task. Hyperparameter tuning using GridSearchCV provided a modest improvement over the baseline model and helped optimize overall performance.
+
+Feature importance analysis revealed that **Drained_after_socializing**, **Time_spent_Alone**, and **Stage_fear** were the most influential predictors. These findings align with common expectations about differences between introverted and extroverted behavior.
+
+Overall, the results suggest that XGBoost is highly effective for this type of structured tabular dataset and can accurately classify personality types using a relatively small set of behavioral features. The project demonstrates that machine learning techniques can successfully identify patterns in social behavior and use them to make reliable personality predictions.
+
+### Future Work
+
+Several opportunities exist to extend and improve this project. One possible direction is to evaluate additional machine learning models such as Random Forest, LightGBM, Logistic Regression, and Support Vector Machines to determine whether they can achieve better performance than XGBoost on this dataset.
+
+Another area for improvement is feature engineering. New features could be created by combining existing behavioral variables or identifying interactions between social activity patterns. These engineered features may help the model capture more complex relationships within the data.
+
+Further hyperparameter optimization techniques, such as Randomized Search or Bayesian Optimization, could also be explored to potentially improve prediction accuracy while reducing training time.
+
+Additional studies could focus on understanding personality traits rather than simply classifying individuals as introverts or extroverts. For example, future research could investigate which behavioral factors contribute most strongly to personality differences and how those factors interact with one another.
+
+Finally, the trained model could be deployed as a web application that allows users to enter behavioral information and receive real-time personality predictions. This would make the model more accessible and demonstrate its practical use in an interactive setting.
+
+## How to reproduce results
+## How to Reproduce Results
+
+### Requirements
+
+To reproduce the results, install the required Python libraries:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn xgboost
+```
+
+---
+
+### Dataset
+
+Download the competition datasets from Kaggle:
+
+- Predict the Introverts from the Extroverts:
+  https://www.kaggle.com/competitions/playground-series-s5e7
+
+Place the downloaded `train.csv` and `test.csv` files in the project directory.
+
+---
+
+### Running the Project
+
+Open the Jupyter Notebook and run all cells in order:
+
+```bash
+jupyter notebook
+```
+
+Open the notebook file and select **Run All**.
+
+The notebook will:
+
+1. Load the training and test datasets.
+2. Perform data cleaning and preprocessing.
+3. Generate exploratory data visualizations.
+4. Train the XGBoost classification model.
+5. Perform hyperparameter tuning using GridSearchCV.
+6. Evaluate model performance using accuracy, precision, recall, and F1-score.
+7. Generate predictions for the competition test dataset.
+8. Create a submission file for Kaggle.
+
+---
+
+### Reproducing Training Results
+
+To reproduce the reported results:
+
+1. Download the Kaggle dataset.
+2. Install all required libraries.
+3. Open the Jupyter Notebook.
+4. Run all cells from start to finish without modification.
+5. Review the evaluation metrics and visualizations generated by the notebook.
+
+The final tuned XGBoost model should achieve approximately **96.9% validation accuracy**.
+
+---
+
+### Applying the Model to New Data
+
+To make predictions on new data:
+
+1. Prepare a CSV file containing the same input features used during training:
+   - Time_spent_Alone
+   - Stage_fear
+   - Social_event_attendance
+   - Going_outside
+   - Drained_after_socializing
+   - Friends_circle_size
+   - Post_frequency
+
+2. Apply the same preprocessing steps used during training:
+   - Handle missing values.
+   - Encode categorical variables.
+
+3. Use the trained XGBoost model to generate personality predictions.
+
+---
+
+### Resources
+
+The project was developed using:
+
+- Python 3
+- Jupyter Notebook
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+- Scikit-learn
+- XGBoost
+
+The experiments can be run on a standard personal computer, as the dataset size and training time are relatively small and do not require specialized hardware such as GPUs or TPUs.
+
+### Overview of files in repository
+
+The repository contains the notebook, datasets, submission file, and documentation required to reproduce the personality classification project.
+
+#### Directory Structure
+
+```text
+Introverts_Extroverts/
+│
+├── README.md
+├── Introverts_Extroverts.ipynb
+├── train.csv
+├── test.csv
+└── submission.csv
+```
+
+#### File Descriptions
+
+**README.md**  
+Contains the project overview, dataset description, methodology, results, conclusions, and instructions for reproducing the project.
+
+**Introverts_Extroverts.ipynb**  
+The main Jupyter Notebook containing the complete machine learning workflow, including data preprocessing, exploratory data analysis, visualization, model training, hyperparameter tuning, evaluation, and generation of predictions.
+
+**train.csv**  
+Training dataset provided by the Kaggle competition. It contains the input features and personality labels used to train and validate the model.
+
+**test.csv**  
+Competition test dataset. This file contains the input features used to generate personality predictions but does not include the target labels.
+
+**submission.csv**  
+Output file generated by the notebook containing the final personality predictions in the format required for Kaggle submission.
+
+#### Notes
+
+The notebook contains detailed code, explanatory comments, and visualizations documenting each stage of the machine learning pipeline. Running all notebook cells from beginning to end will reproduce the preprocessing steps, model training, evaluation results, and generation of the final Kaggle submission file.
+
+### Software Setup
+
+#### Required Packages
+
+The project was developed using Python and the following libraries:
+
+- pandas
+- numpy
+- matplotlib
+- seaborn
+- scikit-learn
+- xgboost
+- jupyter
+
+---
+
+#### Installing the Required Packages
+
+Install the required packages using pip:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn xgboost jupyter
+```
+
+Alternatively, if Anaconda is installed, most of these packages are included by default.
+
+---
+
+#### Running the Project
+
+1. Clone or download this repository.
+
+2. Navigate to the project directory:
+
+```bash
+cd Introverts_Extroverts
+```
+
+3. Launch Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+4. Open:
+
+```text
+Introverts_Extroverts.ipynb
+```
+
+5. Run all cells from top to bottom to reproduce the preprocessing, model training, evaluation, and prediction results.
+
+---
+
+#### System Requirements
+
+The project can be run on a standard personal computer with Python installed. No GPU or specialized hardware is required because the dataset is relatively small and the XGBoost model trains quickly on a CPU.
+
+### Data
+
+### Data
+
+#### Downloading the Data
+
+The datasets used in this project can be downloaded from the Kaggle competition:
+
+**Predict the Introverts from the Extroverts**  
+https://www.kaggle.com/competitions/playground-series-s5e7/data
+
+Download the following files and place them in the project directory:
+
+- `train.csv`
+- `test.csv`
+- `submission.csv`
+---
+
+#### Dataset Description
+
+The dataset contains behavioral and social activity features that are used to predict whether an individual is an introvert or an extrovert.
+
+Input features include:
+
+- Time_spent_Alone
+- Stage_fear
+- Social_event_attendance
+- Going_outside
+- Drained_after_socializing
+- Friends_circle_size
+- Post_frequency
+
+Target variable:
+
+- Personality (Introvert or Extrovert)
+
+---
+
+#### Preprocessing Steps
+
+Before training the model, the following preprocessing steps were applied:
+
+1. **Missing Value Handling**
+   - Numerical features with missing values were filled using the median of each column.
+   - Categorical features with missing values were filled using the mode (most frequent value).
+
+2. **Categorical Encoding**
+   - Categorical variables such as `Stage_fear` and `Drained_after_socializing` were converted into numerical values using label encoding.
+   - The target variable `Personality` was also encoded into numerical labels.
+
+3. **Train-Validation Split**
+   - The training data was split into training and validation sets using an 80/20 stratified split to maintain class balance.
+
+4. **Model Training**
+   - An XGBoost classifier was trained on the processed data.
+   - Hyperparameter tuning was performed using GridSearchCV to improve model performance.
+
+5. **Prediction Generation**
+   - The same preprocessing steps were applied to the competition test dataset.
+   - Predictions were generated and saved to `submission.csv` for Kaggle submission.
+
+No additional external data sources were used. All results were produced using the provided Kaggle datasets and the preprocessing pipeline described above.
+
+### Training
+
+To train the model, first ensure that all required packages are installed and that the dataset files (`train.csv` and `test.csv`) are located in the project directory.
+
+1. Launch Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+2. Open the notebook:
+
+```text
+Introverts_Extroverts.ipynb
+```
+
+3. Run all cells in order from top to bottom.
+
+During execution, the notebook will:
+
+- Load the training and test datasets.
+- Perform data cleaning and handle missing values.
+- Encode categorical variables into numerical form.
+- Generate exploratory data analysis (EDA) visualizations.
+- Split the training data into training and validation sets using an 80/20 stratified split.
+- Train an XGBoost classifier on the processed data.
+- Perform hyperparameter tuning using GridSearchCV to identify the best model configuration.
+- Evaluate model performance using accuracy, precision, recall, and F1-score.
+- Generate predictions on the competition test dataset.
+- Save the final predictions to `submission.csv`.
+
+The final trained model achieved approximately **96.9% validation accuracy** and was used to generate the competition submission file.
+
+#### Performance Evaluation
+
+Model performance is evaluated automatically when all cells in `Introverts_Extroverts.ipynb` are executed. After training the XGBoost model, the notebook calculates several evaluation metrics on the validation dataset, including:
+
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+
+To run the evaluation:
+
+1. Open `Introverts_Extroverts.ipynb` in Jupyter Notebook.
+2. Run all cells from beginning to end.
+3. Locate the evaluation section of the notebook.
+4. Review the printed performance metrics and generated visualizations.
+
+The notebook compares the model's predictions against the true validation labels and reports the final classification performance. The best tuned XGBoost model achieved approximately **96.9% validation accuracy**.
+
+## Citations
+
+### Dataset
+
+1. Kaggle. *Predict the Introverts from the Extroverts*. Available at:
+   https://www.kaggle.com/competitions/playground-series-s5e7
+
+2. Kaggle. *Extrovert vs. Introvert Behavior Data*. Available at:
+   https://www.kaggle.com/datasets/rakeshkapilavai/extrovert-vs-introvert-behavior-data
+
+
+
+
+
+
+
