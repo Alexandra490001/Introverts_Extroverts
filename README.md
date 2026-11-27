@@ -130,6 +130,8 @@ The observations showed the following patterns:
 
 Normalized histograms were used to compare numerical feature distributions between Introverts and Extroverts.
 
+<img width="400" height="300" alt="download" src="https://github.com/user-attachments/assets/61f68b19-48df-45e8-9d81-2e21b6383be0" />
+
 The visualizations suggested the following differences:
 
 - Introverts generally had higher values of `Time_spent_Alone`.
@@ -141,6 +143,8 @@ The visualizations suggested the following differences:
 **4. Categorical Feature Comparisons**
 
 Grouped percentage plots and cross-tabulations were generated to compare `Stage_fear` and `Drained_after_socializing` between personality groups.
+
+<img width="400" height="300" alt="download" src="https://github.com/user-attachments/assets/01814e0e-2fc8-4033-ad7e-dcf0685db854" />
 
 | Feature | Personality | No | Yes |
 |---|---|---:|---:|
@@ -155,6 +159,8 @@ These features showed a strong difference between the two personality groups in 
 
 Boxplots were generated to examine the numerical features and identify potential outliers.
 
+<img width="400" height="300" alt="download" src="https://github.com/user-attachments/assets/e47631b6-6305-46f7-bbb9-95a79d2b5f76" />
+
 - `Time_spent_Alone` showed some potential higher-value outliers above 8.
 - `Social_event_attendance` showed no obvious outliers.
 - `Going_outside` showed no obvious outliers.
@@ -164,6 +170,8 @@ Boxplots were generated to examine the numerical features and identify potential
 **6. Correlation Heatmap**
 
 A correlation heatmap was created to examine relationships among the numerical features.
+
+<img width="400" height="300" alt="download" src="https://github.com/user-attachments/assets/cfae5366-a63b-4e84-aba8-82e3e612f14d" />
 
 The observed correlations included:
 
