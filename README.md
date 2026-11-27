@@ -116,6 +116,8 @@ Histograms were generated to examine the distributions of the five numerical fea
 - `Friends_circle_size`
 - `Post_frequency`
 
+<img width="400" height="300" alt="download" src="https://github.com/user-attachments/assets/e66f0662-3dc4-496c-bb4d-99d386246e81" />
+
 The observations showed the following patterns:
 
 - **Time_spent_Alone:** Most observations were concentrated between 0 and 3.
