@@ -35,10 +35,10 @@ The tuned XGBoost model achieved **96.90% validation accuracy**, slightly improv
 - Total records provided: 24,699
 
 **Training, Validation, and Test Split:**
-- Original training dataset: 18,524 records
-- Model training subset: 14,819 records (80%)
-- Validation subset: 3,705 records (20%)
-- Competition test dataset: 6,175 records
+- Original training data: 18,524 instances
+- Validation data: 3,705 instances (20% of the training set after splitting)
+- Model training data: 14,819 instances (80% of the training set after splitting)
+- Competition test data: 6,175 instances
 
 The training dataset was split into training and validation subsets using an 80/20 stratified split. Stratification was used to preserve the original class distribution across both subsets. The competition test dataset was kept separate and used for generating final predictions.
 
