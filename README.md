@@ -102,7 +102,7 @@ A count plot was generated to examine the distribution of the target variable.
 |---|---:|---:|
 | Extrovert | 13,699 | 73.95% |
 | Introvert | 4,825 | 26.05% |
-<img width="637" height="469" alt="download" src="https://github.com/user-attachments/assets/81e89a37-9672-4acc-af13-15eb8103a948" />
+<img width="350" height="200" alt="download" src="https://github.com/user-attachments/assets/81e89a37-9672-4acc-af13-15eb8103a948" />
 
 The dataset is imbalanced, with Extroverts representing the larger class. Approximately 74% of the observations are labeled Extrovert, while 26% are labeled Introvert.
 
