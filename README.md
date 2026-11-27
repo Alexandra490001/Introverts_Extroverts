@@ -3,6 +3,7 @@
 # Introverts vs. Extroverts Classification
 
 **One-Sentence Summary:** This project uses the XGBoost machine learning algorithm to predict whether an individual is an introvert or extrovert based on behavioral and social activity features from the Kaggle *Predict the Introverts from the Extroverts* competition.
+(https://www.kaggle.com/competitions/playground-series-s5e7).
 
 ## Overview
 
